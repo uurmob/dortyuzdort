@@ -1,26 +1,16 @@
-@import "tailwindcss";
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (max-width: 768px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: flex !important; }
+  .mobile-menu { display: flex !important; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .services-grid { grid-template-columns: 1fr !important; }
+  .projects-grid { grid-template-columns: 1fr !important; }
+  .contact-grid { grid-template-columns: 1fr !important; }
+  .contact-grid input, .contact-grid textarea, .contact-grid button { grid-column: span 1 !important; }
+  .hero-section { padding: 6rem 1.5rem 3rem !important; }
+  .section-padding { padding: 4rem 1.5rem !important; }
+  .nav-container { padding: 1rem 1.5rem !important; }
 }
