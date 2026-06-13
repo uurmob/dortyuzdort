@@ -67,12 +67,12 @@ export default function Home() {
       <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }} />
 
       <nav className="nav-container" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.2rem 3rem', borderBottom: '1px solid #1a1a1a', background: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(12px)' }}>
-        <div style={{ fontWeight: 600, letterSpacing: '0.12em', fontSize: '15px', color: '#fff' }}>
+        <div style={{ fontWeight: 600, letterSpacing: '0.12em', fontSize: '15px', fontWeight: 700, color: '#fff' }}>
           DÖRTYÜZDÖRT<span style={{ color: '#C8F135' }}>.</span>
         </div>
         <div className="nav-links" style={{ display: 'flex', gap: '2rem', fontSize: '13px' }}>
           {navLinks.map(item => (
-            <a key={item} href={`#${item.toLowerCase()}`} style={{ color: '#999', textDecoration: 'none', transition: 'color 0.2s' }}
+            <a key={item} href={`#${item.toLowerCase()}`} style={{ color: '#bbb', textDecoration: 'none', transition: 'color 0.2s' }}
               onMouseEnter={e => e.target.style.color = '#C8F135'}
               onMouseLeave={e => e.target.style.color = '#999'}>{item}</a>
           ))}
@@ -103,14 +103,14 @@ export default function Home() {
           <motion.h1 variants={fadeUp} style={{ fontSize: 'clamp(2.2rem, 7vw, 5.5rem)', fontWeight: 500, lineHeight: 1.05, maxWidth: '800px', margin: 0, color: '#fff' }}>
             Dijitalde{' '}<span style={{ color: '#C8F135' }}>güçlü</span><br />bir varlık kurun.
           </motion.h1>
-          <motion.p variants={fadeUp} style={{ color: '#aaa', fontSize: '16px', lineHeight: 1.8, maxWidth: '500px', marginTop: '1.5rem' }}>
+          <motion.p variants={fadeUp} style={{ color: '#ccc', fontSize: '16px', lineHeight: 1.8, maxWidth: '500px', marginTop: '1.5rem' }}>
             Web tasarım, SEO ve hosting hizmetleriyle markanızı öne çıkarıyoruz. Doktor kliniklerinden ajans sitelerine kadar her ölçekte dijital çözüm.
           </motion.p>
           <motion.div variants={fadeUp} style={{ display: 'flex', gap: '1rem', marginTop: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
             <a href="#iletişim" style={{ background: '#C8F135', color: '#0A0A0A', padding: '13px 28px', fontWeight: 600, fontSize: '14px', textDecoration: 'none', borderRadius: '4px' }}>
               Projeyi Başlat →
             </a>
-            <a href="#projeler" style={{ color: '#aaa', fontSize: '14px', textDecoration: 'none', borderBottom: '1px solid #444', paddingBottom: '2px' }}>
+            <a href="#projeler" style={{ color: '#ccc', fontSize: '14px', textDecoration: 'none', borderBottom: '1px solid #444', paddingBottom: '2px' }}>
               Projeleri Gör
             </a>
           </motion.div>
@@ -154,10 +154,10 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
             <motion.div variants={fadeUp}>
               <h2 style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '1.5rem', color: '#fff' }}>Merhaba, ben <span style={{ color: '#C8F135' }}>Uğur</span>.</h2>
-              <p style={{ color: '#aaa', fontSize: '15px', lineHeight: 1.9, marginBottom: '1rem' }}>
+              <p style={{ color: '#ccc', fontSize: '15px', lineHeight: 1.9, marginBottom: '1rem' }}>
                 Gündüzleri sistem destek şefi olarak çalışıyor, geceleri ise Next.js, yapay zeka ve web teknolojileriyle projeler geliştiriyorum.
               </p>
-              <p style={{ color: '#aaa', fontSize: '15px', lineHeight: 1.9, marginBottom: '2rem' }}>
+              <p style={{ color: '#ccc', fontSize: '15px', lineHeight: 1.9, marginBottom: '2rem' }}>
                 DörtYüzDört, bu iki dünyanın kesişiminde doğdu — teknik altyapıyı iyi bilen biri olarak, müşterilerimin dijital sorunlarına gerçekten çalışan çözümler üretiyorum.
               </p>
               <div style={{ display: 'flex', gap: '1rem' }}>
@@ -199,7 +199,7 @@ export default function Home() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
           <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '0.75rem' }}>İletişim</motion.div>
           <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '0.75rem', color: '#fff' }}>Projenizi konuşalım.</motion.h2>
-          <motion.p variants={fadeUp} style={{ color: '#aaa', marginBottom: '2rem', fontSize: '15px' }}>Fikrinizi anlatın, size en kısa sürede dönelim.</motion.p>
+          <motion.p variants={fadeUp} style={{ color: '#ccc', marginBottom: '2rem', fontSize: '15px' }}>Fikrinizi anlatın, size en kısa sürede dönelim.</motion.p>
           <motion.div variants={fadeUp}><ContactForm /></motion.div>
         </motion.div>
       </section>
@@ -232,7 +232,7 @@ function CountUp({ value, label }) {
   return (
     <div ref={ref} style={{ textAlign: 'center', padding: '1rem 0' }}>
       <div style={{ fontSize: '2.2rem', fontWeight: 500, color: '#C8F135' }}>{count}+</div>
-      <div style={{ fontSize: '12px', color: '#888', marginTop: '0.25rem' }}>{label}</div>
+      <div style={{ fontSize: '12px', color: '#bbb', marginTop: '0.25rem' }}>{label}</div>
     </div>
   );
 }
@@ -244,7 +244,7 @@ function ServiceCard({ icon, title, desc }) {
       style={{ background: hovered ? '#111' : '#0A0A0A', padding: '2rem 1.75rem', transition: 'all 0.3s', borderLeft: hovered ? '2px solid #C8F135' : '2px solid transparent' }}>
       <div style={{ fontSize: '1.3rem', marginBottom: '1rem', color: hovered ? '#C8F135' : '#444', transition: 'color 0.3s' }}>{icon}</div>
       <div style={{ fontWeight: 500, fontSize: '15px', marginBottom: '0.6rem', color: '#fff' }}>{title}</div>
-      <div style={{ fontSize: '13px', color: '#888', lineHeight: 1.7 }}>{desc}</div>
+      <div style={{ fontSize: '13px', color: '#bbb', lineHeight: 1.7 }}>{desc}</div>
     </div>
   );
 }

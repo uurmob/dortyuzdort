@@ -14,3 +14,8 @@ html { scroll-behavior: smooth; }
   .section-padding { padding: 4rem 1.5rem !important; }
   .nav-container { padding: 1rem 1.5rem !important; }
 }
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  .about-info-grid { grid-template-columns: 1fr 1fr !important; }
+}
