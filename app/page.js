@@ -162,15 +162,15 @@ export default function Home() {
               </p>
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <a href="https://instagram.com/ugurkiyak_" target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#666', textDecoration: 'none', fontSize: '13px', border: '1px solid #222', padding: '8px 16px', borderRadius: '4px', transition: 'all 0.2s' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#bbb', textDecoration: 'none', fontSize: '13px', border: '1px solid #222', padding: '8px 16px', borderRadius: '4px', transition: 'all 0.2s' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8F135'; e.currentTarget.style.color = '#C8F135'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#222'; e.currentTarget.style.color = '#666'; }}>
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#222'; e.currentTarget.style.color = '#bbb'; }}>
                   Instagram
                 </a>
                 <a href="https://linkedin.com/in/ugurkiyak" target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#666', textDecoration: 'none', fontSize: '13px', border: '1px solid #222', padding: '8px 16px', borderRadius: '4px', transition: 'all 0.2s' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#bbb', textDecoration: 'none', fontSize: '13px', border: '1px solid #222', padding: '8px 16px', borderRadius: '4px', transition: 'all 0.2s' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8F135'; e.currentTarget.style.color = '#C8F135'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#222'; e.currentTarget.style.color = '#666'; }}>
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#222'; e.currentTarget.style.color = '#bbb'; }}>
                   LinkedIn
                 </a>
               </div>
@@ -184,7 +184,7 @@ export default function Home() {
                   { label: 'Durum', value: 'Freelance Açık ✓' },
                 ].map(item => (
                   <div key={item.label} style={{ background: '#111', border: '1px solid #1a1a1a', borderRadius: '4px', padding: '1.25rem' }}>
-                    <div style={{ fontSize: '11px', color: '#555', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>{item.label}</div>
+                    <div style={{ fontSize: '11px', color: '#bbb', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>{item.label}</div>
                     <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{item.value}</div>
                   </div>
                 ))}
@@ -206,7 +206,7 @@ export default function Home() {
 
       <footer style={{ position: 'relative', zIndex: 1, padding: '2rem 3rem', borderTop: '1px solid #141414', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div style={{ fontSize: '13px', fontWeight: 500, letterSpacing: '0.1em', color: '#fff' }}>DÖRTYÜZDÖRT<span style={{ color: '#C8F135' }}>.</span></div>
-        <div style={{ fontSize: '12px', color: '#666' }}>© 2026 DörtYüzDört. Tüm hakları saklıdır.</div>
+        <div style={{ fontSize: '12px', color: '#bbb' }}>© 2026 DörtYüzDört. Tüm hakları saklıdır.</div>
       </footer>
     </main>
   );
@@ -254,11 +254,11 @@ function ProjectCard({ title, category, url, tags, soon }) {
   return (
     <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{ border: `1px solid ${hovered ? '#C8F135' : '#222'}`, padding: '1.75rem', borderRadius: '4px', transition: 'border-color 0.3s', background: hovered ? '#0d0d0d' : 'transparent' }}>
-      <div style={{ fontSize: '11px', color: '#666', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{category}</div>
+      <div style={{ fontSize: '11px', color: '#bbb', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{category}</div>
       <div style={{ fontSize: '1.2rem', fontWeight: 500, color: '#fff', marginBottom: '0.4rem' }}>{title}</div>
       <div style={{ fontSize: '12px', color: soon ? '#444' : '#C8F135', marginBottom: '1.25rem' }}>{url}</div>
       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-        {tags.map(t => <span key={t} style={{ fontSize: '11px', border: '1px solid #2a2a2a', color: '#666', padding: '3px 8px', borderRadius: '3px' }}>{t}</span>)}
+        {tags.map(t => <span key={t} style={{ fontSize: '11px', border: '1px solid #2a2a2a', color: '#bbb', padding: '3px 8px', borderRadius: '3px' }}>{t}</span>)}
       </div>
     </div>
   );
