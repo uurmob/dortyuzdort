@@ -151,7 +151,7 @@ export default function Home() {
       <section id="hakkında" className="section-padding" style={{ position: 'relative', zIndex: 1, padding: '6rem 3rem', borderTop: '1px solid #141414' }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
           <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Hakkında</motion.div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', alignItems: 'start' }}>
             <motion.div variants={fadeUp}>
               <h2 style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '1.5rem', color: '#fff' }}>Merhaba, ben <span style={{ color: '#C8F135' }}>Uğur</span>.</h2>
               <p style={{ color: '#ccc', fontSize: '15px', lineHeight: 1.9, marginBottom: '1rem' }}>
