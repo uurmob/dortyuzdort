@@ -268,18 +268,41 @@ function ProjectCard({ title, category, url, tags, soon }) {
 
 function ContactForm() {
   const [sent, setSent] = useState(false);
-  return sent ? (
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.message) return;
+    setLoading(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) setSent(true);
+    } catch (e) {}
+    setLoading(false);
+  };
+
+  if (sent) return (
     <div style={{ color: '#C8F135', fontSize: '15px' }}>✓ Mesajınız alındı, en kısa sürede dönüyoruz.</div>
-  ) : (
+  );
+
+  return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', maxWidth: '600px' }}>
-      {[{ placeholder: 'Adınız', colSpan: 1 }, { placeholder: 'E-posta', colSpan: 1 }, { placeholder: 'Mesajınız', colSpan: 2, textarea: true }].map((f) => (
-        f.textarea
-          ? <textarea key={f.placeholder} placeholder={f.placeholder} rows={4} style={{ gridColumn: `span ${f.colSpan}`, background: '#111', border: '1px solid #1e1e1e', color: '#fff', padding: '12px 16px', fontSize: '14px', borderRadius: '4px', resize: 'vertical', fontFamily: 'inherit' }} />
-          : <input key={f.placeholder} placeholder={f.placeholder} style={{ gridColumn: `span ${f.colSpan}`, background: '#111', border: '1px solid #1e1e1e', color: '#fff', padding: '12px 16px', fontSize: '14px', borderRadius: '4px', fontFamily: 'inherit' }} />
-      ))}
-      <button onClick={() => setSent(true)} style={{ gridColumn: 'span 2', background: '#C8F135', color: '#0A0A0A', border: 'none', padding: '14px', fontWeight: 600, fontSize: '14px', borderRadius: '4px', cursor: 'pointer', letterSpacing: '0.02em' }}>
-        Gönder →
+      <input placeholder="Adınız" value={form.name} onChange={e => setForm({...form, name: e.target.value})}
+        style={{ background: '#111', border: '1px solid #1e1e1e', color: '#fff', padding: '12px 16px', fontSize: '14px', borderRadius: '4px', fontFamily: 'inherit' }} />
+      <input placeholder="E-posta" value={form.email} onChange={e => setForm({...form, email: e.target.value})}
+        style={{ background: '#111', border: '1px solid #1e1e1e', color: '#fff', padding: '12px 16px', fontSize: '14px', borderRadius: '4px', fontFamily: 'inherit' }} />
+      <textarea placeholder="Mesajınız" rows={4} value={form.message} onChange={e => setForm({...form, message: e.target.value})}
+        style={{ gridColumn: 'span 2', background: '#111', border: '1px solid #1e1e1e', color: '#fff', padding: '12px 16px', fontSize: '14px', borderRadius: '4px', resize: 'vertical', fontFamily: 'inherit' }} />
+      <button onClick={handleSubmit} disabled={loading}
+        style={{ gridColumn: 'span 2', background: '#C8F135', color: '#0A0A0A', border: 'none', padding: '14px', fontWeight: 600, fontSize: '14px', borderRadius: '4px', cursor: 'pointer' }}>
+        {loading ? 'Gönderiliyor...' : 'Gönder →'}
       </button>
     </div>
   );
 }
+
+
