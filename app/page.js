@@ -1,21 +1,24 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } }
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.15 } }
+};
 
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [scrollY, setScrollY] = useState(0);
   const canvasRef = useRef(null);
-  const particlesRef = useRef([]);
 
   useEffect(() => {
     const handleMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
-    const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   useEffect(() => {
@@ -24,7 +27,6 @@ export default function Home() {
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     const particles = [];
     for (let i = 0; i < 80; i++) {
       particles.push({
@@ -35,14 +37,11 @@ export default function Home() {
         size: Math.random() * 2 + 0.5,
       });
     }
-    particlesRef.current = particles;
-
     let animId;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
+        p.x += p.vx; p.y += p.vy;
         if (p.x < 0) p.x = canvas.width;
         if (p.x > canvas.width) p.x = 0;
         if (p.y < 0) p.y = canvas.height;
@@ -54,8 +53,7 @@ export default function Home() {
       });
       particles.forEach((a, i) => {
         particles.slice(i + 1).forEach((b) => {
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
+          const dx = a.x - b.x, dy = a.y - b.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
             ctx.beginPath();
@@ -70,16 +68,9 @@ export default function Home() {
       animId = requestAnimationFrame(animate);
     };
     animate();
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    const handleResize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     window.addEventListener('resize', handleResize);
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', handleResize); };
   }, []);
 
   const services = [
@@ -100,12 +91,11 @@ export default function Home() {
     <main style={{ background: '#0A0A0A', minHeight: '100vh', color: '#fff', fontFamily: 'system-ui, sans-serif', overflowX: 'hidden' }}>
       <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }} />
 
-      {/* NAV */}
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.2rem 3rem', borderBottom: '1px solid #1a1a1a', background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(12px)' }}>
         <div style={{ fontWeight: 600, letterSpacing: '0.12em', fontSize: '15px' }}>
           DÖRTYÜZDÖRT<span style={{ color: '#C8F135' }}>.</span>
         </div>
-        <div style={{ display: 'flex', gap: '2rem', fontSize: '13px', color: '#666' }}>
+        <div style={{ display: 'flex', gap: '2rem', fontSize: '13px' }}>
           {['Hizmetler', 'Projeler', 'Hakkında', 'İletişim'].map((item) => (
             <a key={item} href={`#${item.toLowerCase()}`} style={{ color: '#666', textDecoration: 'none', transition: 'color 0.2s' }}
               onMouseEnter={e => e.target.style.color = '#C8F135'}
@@ -116,89 +106,79 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO */}
       <section style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '8rem 3rem 4rem' }}>
-        <div style={{ fontSize: '11px', letterSpacing: '0.3em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '1.5rem', opacity: 0.8 }}>
-          ✦ Dijital Ajans — İstanbul
-        </div>
-        <h1 style={{ fontSize: 'clamp(2.5rem, 7vw, 5.5rem)', fontWeight: 500, lineHeight: 1.05, maxWidth: '800px', margin: 0 }}>
-          Dijitalde{' '}
-          <span style={{ color: '#C8F135', position: 'relative' }}>güçlü</span>
-          <br />bir varlık kurun.
-        </h1>
-        <p style={{ color: '#555', fontSize: '16px', lineHeight: 1.8, maxWidth: '500px', marginTop: '2rem' }}>
-          Web tasarım, SEO ve hosting hizmetleriyle markanızı öne çıkarıyoruz. Doktor kliniklerinden ajans sitelerine kadar her ölçekte dijital çözüm.
-        </p>
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '2.5rem', alignItems: 'center' }}>
-          <a href="#iletişim" style={{ background: '#C8F135', color: '#0A0A0A', padding: '14px 32px', fontWeight: 600, fontSize: '14px', textDecoration: 'none', borderRadius: '4px', letterSpacing: '0.02em', transition: 'transform 0.2s' }}
-            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
-            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
-            Projeyi Başlat →
-          </a>
-          <a href="#projeler" style={{ color: '#555', fontSize: '14px', textDecoration: 'none', borderBottom: '1px solid #333', paddingBottom: '2px' }}
-            onMouseEnter={e => { e.target.style.color = '#fff'; e.target.style.borderColor = '#555'; }}
-            onMouseLeave={e => { e.target.style.color = '#555'; e.target.style.borderColor = '#333'; }}>
-            Projeleri Gör
-          </a>
-        </div>
-
-        {/* SCROLL INDICATOR */}
+        <motion.div initial="hidden" animate="visible" variants={stagger}>
+          <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.3em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '1.5rem', opacity: 0.8 }}>
+            ✦ Dijital Ajans — İstanbul
+          </motion.div>
+          <motion.h1 variants={fadeUp} style={{ fontSize: 'clamp(2.5rem, 7vw, 5.5rem)', fontWeight: 500, lineHeight: 1.05, maxWidth: '800px', margin: 0 }}>
+            Dijitalde{' '}<span style={{ color: '#C8F135' }}>güçlü</span><br />bir varlık kurun.
+          </motion.h1>
+          <motion.p variants={fadeUp} style={{ color: '#555', fontSize: '16px', lineHeight: 1.8, maxWidth: '500px', marginTop: '2rem' }}>
+            Web tasarım, SEO ve hosting hizmetleriyle markanızı öne çıkarıyoruz. Doktor kliniklerinden ajans sitelerine kadar her ölçekte dijital çözüm.
+          </motion.p>
+          <motion.div variants={fadeUp} style={{ display: 'flex', gap: '1rem', marginTop: '2.5rem', alignItems: 'center' }}>
+            <a href="#iletişim" style={{ background: '#C8F135', color: '#0A0A0A', padding: '14px 32px', fontWeight: 600, fontSize: '14px', textDecoration: 'none', borderRadius: '4px', transition: 'transform 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+              Projeyi Başlat →
+            </a>
+            <a href="#projeler" style={{ color: '#555', fontSize: '14px', textDecoration: 'none', borderBottom: '1px solid #333', paddingBottom: '2px' }}>
+              Projeleri Gör
+            </a>
+          </motion.div>
+        </motion.div>
         <div style={{ position: 'absolute', bottom: '3rem', left: '3rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <div style={{ width: '40px', height: '1px', background: '#333' }} />
           <span style={{ fontSize: '11px', color: '#444', letterSpacing: '0.15em' }}>SCROLL</span>
         </div>
       </section>
 
-      {/* STATS */}
       <section style={{ position: 'relative', zIndex: 1, padding: '3rem', borderTop: '1px solid #141414', borderBottom: '1px solid #141414' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
           {stats.map((s) => (
-            <CountUp key={s.label} value={s.value} label={s.label} />
+            <motion.div key={s.label} variants={fadeUp}>
+              <CountUp value={s.value} label={s.label} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
-      {/* HİZMETLER */}
       <section id="hizmetler" style={{ position: 'relative', zIndex: 1, padding: '6rem 3rem' }}>
-        <div style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '1rem' }}>Hizmetler</div>
-        <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '3rem', color: '#fff' }}>Ne yapıyoruz?</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1px', border: '1px solid #1a1a1a', background: '#1a1a1a' }}>
-          {services.map((s) => (
-            <ServiceCard key={s.title} {...s} />
-          ))}
-        </div>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+          <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '1rem' }}>Hizmetler</motion.div>
+          <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '3rem', color: '#fff' }}>Ne yapıyoruz?</motion.h2>
+          <motion.div variants={stagger} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1px', border: '1px solid #1a1a1a', background: '#1a1a1a' }}>
+            {services.map((s) => (
+              <motion.div key={s.title} variants={fadeUp}>
+                <ServiceCard {...s} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* PROJELER */}
       <section id="projeler" style={{ position: 'relative', zIndex: 1, padding: '6rem 3rem', borderTop: '1px solid #141414' }}>
-        <div style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '1rem' }}>Projeler</div>
-        <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '3rem', color: '#fff' }}>Referanslar</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
-          <ProjectCard
-            title="Selen Şenman"
-            category="Diyetisyen Web Sitesi"
-            url="www.selensenman.com"
-            tags={['PHP', 'MySQL', 'Admin Panel']}
-          />
-          <ProjectCard
-            title="Hastane Dashboard"
-            category="Klinik Yönetim Sistemi"
-            url="Yakında"
-            tags={['Next.js', 'Supabase', 'Dashboard']}
-            soon
-          />
-        </div>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+          <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '1rem' }}>Projeler</motion.div>
+          <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '3rem', color: '#fff' }}>Referanslar</motion.h2>
+          <motion.div variants={stagger} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+            <motion.div variants={fadeUp}><ProjectCard title="Selen Şenman" category="Diyetisyen Web Sitesi" url="www.selensenman.com" tags={['PHP', 'MySQL', 'Admin Panel']} /></motion.div>
+            <motion.div variants={fadeUp}><ProjectCard title="Hastane Dashboard" category="Klinik Yönetim Sistemi" url="Yakında" tags={['Next.js', 'Supabase', 'Dashboard']} soon /></motion.div>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* İLETİŞİM */}
       <section id="iletişim" style={{ position: 'relative', zIndex: 1, padding: '6rem 3rem', borderTop: '1px solid #141414' }}>
-        <div style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '1rem' }}>İletişim</div>
-        <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '1rem', color: '#fff' }}>Projenizi konuşalım.</h2>
-        <p style={{ color: '#555', marginBottom: '2.5rem', fontSize: '15px' }}>Fikrinizi anlatın, size en kısa sürede dönelim.</p>
-        <ContactForm />
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+          <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '1rem' }}>İletişim</motion.div>
+          <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '1rem', color: '#fff' }}>Projenizi konuşalım.</motion.h2>
+          <motion.p variants={fadeUp} style={{ color: '#555', marginBottom: '2.5rem', fontSize: '15px' }}>Fikrinizi anlatın, size en kısa sürede dönelim.</motion.p>
+          <motion.div variants={fadeUp}><ContactForm /></motion.div>
+        </motion.div>
       </section>
 
-      {/* FOOTER */}
       <footer style={{ position: 'relative', zIndex: 1, padding: '2rem 3rem', borderTop: '1px solid #141414', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ fontSize: '13px', fontWeight: 500, letterSpacing: '0.1em' }}>DÖRTYÜZDÖRT<span style={{ color: '#C8F135' }}>.</span></div>
         <div style={{ fontSize: '12px', color: '#444' }}>© 2026 DörtYüzDört. Tüm hakları saklıdır.</div>
@@ -236,9 +216,7 @@ function CountUp({ value, label }) {
 function ServiceCard({ icon, title, desc }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{ background: hovered ? '#111' : '#0A0A0A', padding: '2.5rem 2rem', transition: 'background 0.3s', cursor: 'default', borderLeft: hovered ? '2px solid #C8F135' : '2px solid transparent' }}>
       <div style={{ fontSize: '1.5rem', marginBottom: '1rem', color: hovered ? '#C8F135' : '#333', transition: 'color 0.3s' }}>{icon}</div>
       <div style={{ fontWeight: 500, fontSize: '15px', marginBottom: '0.75rem', color: '#fff' }}>{title}</div>
@@ -250,9 +228,7 @@ function ServiceCard({ icon, title, desc }) {
 function ProjectCard({ title, category, url, tags, soon }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{ border: `1px solid ${hovered ? '#C8F135' : '#1a1a1a'}`, padding: '2rem', borderRadius: '4px', transition: 'border-color 0.3s', background: hovered ? '#0d0d0d' : 'transparent', cursor: 'pointer' }}>
       <div style={{ fontSize: '11px', color: '#555', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{category}</div>
       <div style={{ fontSize: '1.3rem', fontWeight: 500, color: '#fff', marginBottom: '0.5rem' }}>{title}</div>
@@ -304,5 +280,3 @@ function ContactForm() {
     </div>
   );
 }
-
-
