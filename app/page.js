@@ -66,7 +66,6 @@ export default function Home() {
     <main style={{ background: '#0A0A0A', minHeight: '100vh', color: '#fff', fontFamily: 'system-ui, sans-serif', overflowX: 'hidden' }}>
       <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }} />
 
-      {/* NAV */}
       <nav className="nav-container" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.2rem 3rem', borderBottom: '1px solid #1a1a1a', background: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(12px)' }}>
         <div style={{ fontWeight: 600, letterSpacing: '0.12em', fontSize: '15px', color: '#fff' }}>
           DÖRTYÜZDÖRT<span style={{ color: '#C8F135' }}>.</span>
@@ -86,12 +85,11 @@ export default function Home() {
         </button>
       </nav>
 
-      {/* MOBİL MENÜ */}
       {menuOpen && (
-        <div className="mobile-menu" style={{ position: 'fixed', top: '60px', left: 0, right: 0, zIndex: 99, background: 'rgba(10,10,10,0.98)', borderBottom: '1px solid #1a1a1a', flexDirection: 'column', padding: '1.5rem', gap: '1.5rem' }}>
+        <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, zIndex: 99, background: 'rgba(10,10,10,0.98)', borderBottom: '1px solid #1a1a1a', display: 'flex', flexDirection: 'column', padding: '1.5rem', gap: '1.5rem' }}>
           {navLinks.map(item => (
             <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)}
-              style={{ color: '#ccc', textDecoration: 'none', fontSize: '16px', letterSpacing: '0.05em' }}>{item}</a>
+              style={{ color: '#ccc', textDecoration: 'none', fontSize: '16px' }}>{item}</a>
           ))}
         </div>
       )}
@@ -149,6 +147,53 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* HAKKINDA */}
+      <section id="hakkında" className="section-padding" style={{ position: 'relative', zIndex: 1, padding: '6rem 3rem', borderTop: '1px solid #141414' }}>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+          <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Hakkında</motion.div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+            <motion.div variants={fadeUp}>
+              <h2 style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '1.5rem', color: '#fff' }}>Merhaba, ben <span style={{ color: '#C8F135' }}>Uğur</span>.</h2>
+              <p style={{ color: '#aaa', fontSize: '15px', lineHeight: 1.9, marginBottom: '1rem' }}>
+                Gündüzleri sistem destek şefi olarak çalışıyor, geceleri ise Next.js, yapay zeka ve web teknolojileriyle projeler geliştiriyorum.
+              </p>
+              <p style={{ color: '#aaa', fontSize: '15px', lineHeight: 1.9, marginBottom: '2rem' }}>
+                DörtYüzDört, bu iki dünyanın kesişiminde doğdu — teknik altyapıyı iyi bilen biri olarak, müşterilerimin dijital sorunlarına gerçekten çalışan çözümler üretiyorum.
+              </p>
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <a href="https://instagram.com/ugurkiyak_" target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#666', textDecoration: 'none', fontSize: '13px', border: '1px solid #222', padding: '8px 16px', borderRadius: '4px', transition: 'all 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8F135'; e.currentTarget.style.color = '#C8F135'; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#222'; e.currentTarget.style.color = '#666'; }}>
+                  Instagram
+                </a>
+                <a href="https://linkedin.com/in/ugurkiyak" target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#666', textDecoration: 'none', fontSize: '13px', border: '1px solid #222', padding: '8px 16px', borderRadius: '4px', transition: 'all 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#C8F135'; e.currentTarget.style.color = '#C8F135'; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#222'; e.currentTarget.style.color = '#666'; }}>
+                  LinkedIn
+                </a>
+              </div>
+            </motion.div>
+            <motion.div variants={fadeUp}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                {[
+                  { label: 'Uzmanlık', value: 'Sistem & Altyapı' },
+                  { label: 'Hobi', value: 'Next.js & AI' },
+                  { label: 'Konum', value: 'İstanbul' },
+                  { label: 'Durum', value: 'Freelance Açık ✓' },
+                ].map(item => (
+                  <div key={item.label} style={{ background: '#111', border: '1px solid #1a1a1a', borderRadius: '4px', padding: '1.25rem' }}>
+                    <div style={{ fontSize: '11px', color: '#555', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>{item.label}</div>
+                    <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{item.value}</div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* İLETİŞİM */}
       <section id="iletişim" className="section-padding" style={{ position: 'relative', zIndex: 1, padding: '6rem 3rem', borderTop: '1px solid #141414' }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
@@ -159,7 +204,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* FOOTER */}
       <footer style={{ position: 'relative', zIndex: 1, padding: '2rem 3rem', borderTop: '1px solid #141414', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div style={{ fontSize: '13px', fontWeight: 500, letterSpacing: '0.1em', color: '#fff' }}>DÖRTYÜZDÖRT<span style={{ color: '#C8F135' }}>.</span></div>
         <div style={{ fontSize: '12px', color: '#666' }}>© 2026 DörtYüzDört. Tüm hakları saklıdır.</div>
