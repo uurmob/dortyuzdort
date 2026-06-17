@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import './globals.css';
 
 const fadeUp = {
@@ -13,6 +14,42 @@ const stagger = { visible: { transition: { staggerChildren: 0.12 } } };
 export default function Home() {
   const canvasRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/home-data').then(r => r.json()).then(setData).catch(() => {});
+  }, []);
+
+  const services = data?.hizmetler ?? [
+    { id: 1, icon: '⬡', baslik: 'Web Tasarım', aciklama: 'Modern, hızlı ve dönüşüm odaklı web siteleri. Her proje özgün tasarım anlayışıyla hayata geçirilir.' },
+    { id: 2, icon: '◈', baslik: 'SEO', aciklama: "Google'da üst sıralara çıkın. Teknik SEO, içerik stratejisi ve rakip analiziyle organik büyüme." },
+    { id: 3, icon: '▣', baslik: 'Hosting', aciklama: 'Güvenli, hızlı ve kesintisiz altyapı. Verileriniz her gece yedeklenir, 7/24 izleme.' },
+    { id: 4, icon: '⬘', baslik: 'Dashboard', aciklama: "Klinik, ajans veya işletmenize özel yönetim panelleri. Excel'e veda edin." },
+  ];
+
+  const projeler = data?.projeler ?? [
+    { id: 1, isim: 'Selen Şenman', aciklama: 'Diyetisyen Web Sitesi', url: 'www.selensenman.com', teknolojiler: ['PHP', 'MySQL', 'Admin Panel'], one_cikan: true },
+    { id: 2, isim: 'Hastane Dashboard', aciklama: 'Klinik Yönetim Sistemi', url: null, teknolojiler: ['Next.js', 'Supabase', 'Dashboard'], one_cikan: false },
+  ];
+
+  const ayarlar = data?.siteAyarlar ?? {};
+  const freelanceAcik = ayarlar['freelance_acik'] !== 'false';
+  const hakkindaMetin = ayarlar['hakkinda_metin'] ?? 'Gündüzleri sistem destek şefi olarak çalışıyor, geceleri ise Next.js, yapay zeka ve web teknolojileriyle projeler geliştiriyorum.';
+
+  const stats = [
+    { value: parseInt(ayarlar['istatistik_proje'] ?? '12', 10), label: 'Tamamlanan Proje' },
+    { value: parseInt(ayarlar['istatistik_musteri'] ?? '8', 10), label: 'Mutlu Müşteri' },
+    { value: parseInt(ayarlar['istatistik_deneyim'] ?? '3', 10), label: 'Yıllık Deneyim' },
+    { value: parseInt(ayarlar['istatistik_uptime'] ?? '99', 10), label: '% Uptime' },
+  ];
+
+  const navLinks = [
+    { label: 'Hizmetler', href: '#hizmetler' },
+    { label: 'Projeler', href: '#projeler' },
+    { label: 'Paketler', href: '/paketler', external: false },
+    { label: 'Hakkında', href: '#hakkında' },
+    { label: 'İletişim', href: '#iletişim' },
+  ];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -46,35 +83,25 @@ export default function Home() {
     return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', handleResize); };
   }, []);
 
-  const services = [
-    { icon: '⬡', title: 'Web Tasarım', desc: 'Modern, hızlı ve dönüşüm odaklı web siteleri. Her proje özgün tasarım anlayışıyla hayata geçirilir.' },
-    { icon: '◈', title: 'SEO', desc: "Google'da üst sıralara çıkın. Teknik SEO, içerik stratejisi ve rakip analiziyle organik büyüme." },
-    { icon: '▣', title: 'Hosting', desc: 'Güvenli, hızlı ve kesintisiz altyapı. Verileriniz her gece yedeklenir, 7/24 izleme.' },
-    { icon: '⬘', title: 'Dashboard', desc: "Klinik, ajans veya işletmenize özel yönetim panelleri. Excel'e veda edin." },
-  ];
-
-  const stats = [
-    { value: 12, label: 'Tamamlanan Proje' },
-    { value: 8, label: 'Mutlu Müşteri' },
-    { value: 3, label: 'Yıllık Deneyim' },
-    { value: 99, label: '% Uptime' },
-  ];
-
-  const navLinks = ['Hizmetler', 'Projeler', 'Hakkında', 'İletişim'];
-
   return (
     <main style={{ background: '#0A0A0A', minHeight: '100vh', color: '#fff', fontFamily: 'system-ui, sans-serif', overflowX: 'hidden' }}>
       <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }} />
 
       <nav className="nav-container" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.2rem 3rem', borderBottom: '1px solid #1a1a1a', background: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(12px)' }}>
-        <div style={{ fontWeight: 600, letterSpacing: '0.12em', fontSize: '15px', fontWeight: 700, color: '#fff' }}>
+        <div style={{ fontWeight: 700, letterSpacing: '0.12em', fontSize: '15px', color: '#fff' }}>
           DÖRTYÜZDÖRT<span style={{ color: '#C8F135' }}>.</span>
         </div>
         <div className="nav-links" style={{ display: 'flex', gap: '2rem', fontSize: '13px' }}>
           {navLinks.map(item => (
-            <a key={item} href={`#${item.toLowerCase()}`} style={{ color: '#bbb', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={e => e.target.style.color = '#C8F135'}
-              onMouseLeave={e => e.target.style.color = '#999'}>{item}</a>
+            item.href.startsWith('#') ? (
+              <a key={item.label} href={item.href} style={{ color: '#bbb', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.target.style.color = '#C8F135'}
+                onMouseLeave={e => e.target.style.color = '#999'}>{item.label}</a>
+            ) : (
+              <Link key={item.label} href={item.href} style={{ color: '#bbb', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#C8F135'}
+                onMouseLeave={e => e.currentTarget.style.color = '#999'}>{item.label}</Link>
+            )
           ))}
         </div>
         <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}
@@ -86,10 +113,15 @@ export default function Home() {
       </nav>
 
       {menuOpen && (
-        <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, zIndex: 99, background: 'rgba(10,10,10,0.98)', borderBottom: '1px solid #1a1a1a', display: 'flex', flexDirection: 'column', padding: '1.5rem', gap: '1.5rem' }}>
+        <div className="mobile-menu" style={{ position: 'fixed', top: '60px', left: 0, right: 0, zIndex: 99, background: 'rgba(10,10,10,0.98)', borderBottom: '1px solid #1a1a1a', display: 'flex', flexDirection: 'column', padding: '1.5rem', gap: '1.5rem' }}>
           {navLinks.map(item => (
-            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)}
-              style={{ color: '#ccc', textDecoration: 'none', fontSize: '16px' }}>{item}</a>
+            item.href.startsWith('#') ? (
+              <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}
+                style={{ color: '#ccc', textDecoration: 'none', fontSize: '16px' }}>{item.label}</a>
+            ) : (
+              <Link key={item.label} href={item.href} onClick={() => setMenuOpen(false)}
+                style={{ color: '#ccc', textDecoration: 'none', fontSize: '16px' }}>{item.label}</Link>
+            )
           ))}
         </div>
       )}
@@ -110,9 +142,9 @@ export default function Home() {
             <a href="#iletişim" style={{ background: '#C8F135', color: '#0A0A0A', padding: '13px 28px', fontWeight: 600, fontSize: '14px', textDecoration: 'none', borderRadius: '4px' }}>
               Projeyi Başlat →
             </a>
-            <a href="#projeler" style={{ color: '#ccc', fontSize: '14px', textDecoration: 'none', borderBottom: '1px solid #444', paddingBottom: '2px' }}>
-              Projeleri Gör
-            </a>
+            <Link href="/paketler" style={{ color: '#ccc', fontSize: '14px', textDecoration: 'none', borderBottom: '1px solid #444', paddingBottom: '2px' }}>
+              Fiyatları Gör
+            </Link>
           </motion.div>
         </motion.div>
       </section>
@@ -130,7 +162,7 @@ export default function Home() {
           <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Hizmetler</motion.div>
           <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '2.5rem', color: '#fff' }}>Ne yapıyoruz?</motion.h2>
           <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1px', background: '#1a1a1a', border: '1px solid #1a1a1a' }}>
-            {services.map(s => <ServiceCard key={s.title} {...s} />)}
+            {services.map(s => <ServiceCard key={s.id ?? s.baslik} icon={s.icon} title={s.baslik} desc={s.aciklama} />)}
           </div>
         </motion.div>
       </section>
@@ -141,21 +173,30 @@ export default function Home() {
           <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Projeler</motion.div>
           <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '2.5rem', color: '#fff' }}>Referanslar</motion.h2>
           <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-            <motion.div variants={fadeUp}><ProjectCard title="Selen Şenman" category="Diyetisyen Web Sitesi" url="www.selensenman.com" tags={['PHP', 'MySQL', 'Admin Panel']} /></motion.div>
-            <motion.div variants={fadeUp}><ProjectCard title="Hastane Dashboard" category="Klinik Yönetim Sistemi" url="Yakında" tags={['Next.js', 'Supabase', 'Dashboard']} soon /></motion.div>
+            {projeler.map(p => (
+              <motion.div key={p.id} variants={fadeUp}>
+                <ProjectCard
+                  title={p.isim}
+                  category={p.aciklama}
+                  url={p.url ?? 'Yakında'}
+                  tags={p.teknolojiler ?? []}
+                  soon={!p.url}
+                />
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </section>
 
       {/* HAKKINDA */}
-      <section id="hakkında" className="section-padding" style={{ position: 'relative', zIndex: 1, padding: '6rem 3rem', borderTop: '1px solid #141414' }}>
+      <section id="hakkında" className="section-padding about-grid" style={{ position: 'relative', zIndex: 1, padding: '6rem 3rem', borderTop: '1px solid #141414' }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
           <motion.div variants={fadeUp} style={{ fontSize: '11px', letterSpacing: '0.25em', color: '#C8F135', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Hakkında</motion.div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', alignItems: 'start' }}>
             <motion.div variants={fadeUp}>
               <h2 style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '1.5rem', color: '#fff' }}>Merhaba, ben <span style={{ color: '#C8F135' }}>Uğur</span>.</h2>
               <p style={{ color: '#ccc', fontSize: '15px', lineHeight: 1.9, marginBottom: '1rem' }}>
-                Gündüzleri sistem destek şefi olarak çalışıyor, geceleri ise Next.js, yapay zeka ve web teknolojileriyle projeler geliştiriyorum.
+                {hakkindaMetin}
               </p>
               <p style={{ color: '#ccc', fontSize: '15px', lineHeight: 1.9, marginBottom: '2rem' }}>
                 DörtYüzDört, bu iki dünyanın kesişiminde doğdu — teknik altyapıyı iyi bilen biri olarak, müşterilerimin dijital sorunlarına gerçekten çalışan çözümler üretiyorum.
@@ -176,12 +217,12 @@ export default function Home() {
               </div>
             </motion.div>
             <motion.div variants={fadeUp}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="about-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 {[
                   { label: 'Uzmanlık', value: 'Sistem & Altyapı' },
                   { label: 'Hobi', value: 'Next.js & AI' },
                   { label: 'Konum', value: 'İstanbul' },
-                  { label: 'Durum', value: 'Freelance Açık ✓' },
+                  { label: 'Durum', value: freelanceAcik ? 'Freelance Açık ✓' : 'Freelance Kapalı' },
                 ].map(item => (
                   <div key={item.label} style={{ background: '#111', border: '1px solid #1a1a1a', borderRadius: '4px', padding: '1.25rem' }}>
                     <div style={{ fontSize: '11px', color: '#bbb', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>{item.label}</div>
@@ -258,7 +299,7 @@ function ProjectCard({ title, category, url, tags, soon }) {
       <div style={{ fontSize: '1.2rem', fontWeight: 500, color: '#fff', marginBottom: '0.4rem' }}>{title}</div>
       <div style={{ fontSize: '12px', color: soon ? '#444' : '#C8F135', marginBottom: '1.25rem' }}>{url}</div>
       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-        {tags.map(t => <span key={t} style={{ fontSize: '11px', border: '1px solid #2a2a2a', color: '#bbb', padding: '3px 8px', borderRadius: '3px' }}>{t}</span>)}
+        {(tags ?? []).map(t => <span key={t} style={{ fontSize: '11px', border: '1px solid #2a2a2a', color: '#bbb', padding: '3px 8px', borderRadius: '3px' }}>{t}</span>)}
       </div>
     </div>
   );
