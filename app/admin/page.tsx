@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { adminLogin, adminLogout } from '@/app/actions/admin'
+import { adminLogin } from '@/app/actions/admin'
 import { createClient } from '@/lib/supabase/server'
 import AdminPanel from './AdminPanel'
 
@@ -28,24 +28,30 @@ async function getInitialData() {
   }
 }
 
-export default async function AdminPage() {
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>
+}) {
   const cookieStore = await cookies()
   const isAuth = cookieStore.get('admin_session')?.value === 'authenticated'
 
   if (!isAuth) {
-    return <LoginPage />
+    const { error } = await searchParams
+    return <LoginPage error={error} />
   }
 
   const data = await getInitialData()
   return <AdminPanel {...data} />
 }
 
-function LoginPage() {
+function LoginPage({ error }: { error?: string }) {
   async function login(formData: FormData) {
     'use server'
     const password = formData.get('password') as string
     const result = await adminLogin(password)
     if (result.success) redirect('/admin')
+    else redirect('/admin?error=1')
   }
 
   return (
@@ -64,8 +70,23 @@ function LoginPage() {
             placeholder="Şifre"
             required
             autoFocus
-            style={{ background: '#111', border: '1px solid #222', color: '#fff', padding: '13px 16px', fontSize: '15px', borderRadius: '4px', fontFamily: 'inherit', outline: 'none', width: '100%' }}
+            style={{
+              background: '#111',
+              border: `1px solid ${error ? '#c00' : '#222'}`,
+              color: '#fff',
+              padding: '13px 16px',
+              fontSize: '15px',
+              borderRadius: '4px',
+              fontFamily: 'inherit',
+              outline: 'none',
+              width: '100%',
+            }}
           />
+          {error && (
+            <div style={{ color: '#f66', fontSize: '13px', textAlign: 'center' }}>
+              Hatalı şifre. Tekrar deneyin.
+            </div>
+          )}
           <button type="submit"
             style={{ background: '#C8F135', color: '#0A0A0A', border: 'none', padding: '14px', fontWeight: 700, fontSize: '14px', borderRadius: '4px', cursor: 'pointer', width: '100%' }}>
             Giriş Yap
