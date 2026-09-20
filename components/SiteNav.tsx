@@ -36,9 +36,13 @@ export function SiteNav() {
           </span>
         </div>
 
-        <nav className="nav-links hidden items-center gap-8 sm:flex">
+        <nav className="nav-links hidden items-center gap-3 sm:flex">
           {LINKS.map((link) => (
-            <a key={link.href} href={link.href} className="link text-sm">
+            <a
+              key={link.href}
+              href={link.href}
+              className="btn btn-ghost !min-h-0 !py-2 !px-5 text-sm"
+            >
               {link.label}
             </a>
           ))}

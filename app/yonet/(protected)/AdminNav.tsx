@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/yonet/genel", label: "Genel" },
   { href: "/yonet/hizmetler", label: "Hizmetler" },
   { href: "/yonet/isler", label: "İşler" },
+  { href: "/yonet/mesajlar", label: "Mesajlar" },
 ];
 
 export function AdminNav({ userName }: { userName: string }) {

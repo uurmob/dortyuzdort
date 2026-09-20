@@ -8,6 +8,7 @@ const updateSchema = z.object({
   title: z.string().min(1).optional(),
   description: z.string().min(1).optional(),
   url: z.string().url().optional().or(z.literal("")),
+  image: z.string().optional(),
   order: z.number().int().optional(),
   published: z.boolean().optional(),
 });
@@ -31,10 +32,14 @@ export async function PATCH(
     );
   }
 
-  const { url, ...rest } = parsed.data;
+  const { url, image, ...rest } = parsed.data;
   const item = await prisma.workItem.update({
     where: { id },
-    data: { ...rest, ...(url !== undefined ? { url: url || null } : {}) },
+    data: {
+      ...rest,
+      ...(url !== undefined ? { url: url || null } : {}),
+      ...(image !== undefined ? { image: image || null } : {}),
+    },
   });
   revalidatePath("/", "layout");
 

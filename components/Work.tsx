@@ -23,14 +23,34 @@ export function Work({ items }: { items: WorkItem[] }) {
           {items.length > 0
             ? items.map((item) => {
                 const card = (
-                  <div className="card h-full">
-                    <h3 className="flex items-center gap-2 text-lg">
-                      {item.title}
-                      {item.url && (
-                        <ArrowUpRight className="h-4 w-4 text-[var(--text-tertiary)]" />
+                  <div className="card h-full !p-0 overflow-hidden">
+                    <div className="aspect-video w-full overflow-hidden bg-[var(--surface-hover)]">
+                      {item.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <div
+                          className="h-full w-full"
+                          style={{
+                            backgroundImage:
+                              "linear-gradient(135deg, rgba(0,212,255,0.1), rgba(139,92,246,0.1)), repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 14px)",
+                          }}
+                        />
                       )}
-                    </h3>
-                    <p className="mt-3 text-[0.9375rem]">{item.description}</p>
+                    </div>
+                    <div className="p-8">
+                      <h3 className="flex items-center gap-2 text-lg">
+                        {item.title}
+                        {item.url && (
+                          <ArrowUpRight className="h-4 w-4 text-[var(--text-tertiary)]" />
+                        )}
+                      </h3>
+                      <p className="mt-3 text-[0.9375rem]">{item.description}</p>
+                    </div>
                   </div>
                 );
                 return item.url ? (

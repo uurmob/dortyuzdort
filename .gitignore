@@ -28,6 +28,9 @@ yarn-error.log*
 /prisma/*.db
 /prisma/*.db-journal
 
+# local uploaded files (production uploads live on a persistent volume)
+/data
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

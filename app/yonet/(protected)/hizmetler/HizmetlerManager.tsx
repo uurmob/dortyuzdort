@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Trash2, Loader2 } from "lucide-react";
+import { Plus, Trash2, Loader2, Check } from "lucide-react";
 import type { Service } from "@prisma/client";
 
 export function HizmetlerManager({
@@ -13,6 +13,7 @@ export function HizmetlerManager({
   const router = useRouter();
   const [services, setServices] = useState(initialServices);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [savedId, setSavedId] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
 
   function updateLocal(id: string, patch: Partial<Service>) {
@@ -23,6 +24,7 @@ export function HizmetlerManager({
 
   async function saveService(service: Service) {
     setBusyId(service.id);
+    setSavedId(null);
     await fetch(`/api/yonet/hizmetler/${service.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -34,6 +36,7 @@ export function HizmetlerManager({
       }),
     });
     setBusyId(null);
+    setSavedId(service.id);
     router.refresh();
   }
 
@@ -76,7 +79,6 @@ export function HizmetlerManager({
                 onChange={(e) =>
                   updateLocal(service.id, { title: e.target.value })
                 }
-                onBlur={() => saveService(service)}
               />
               <textarea
                 rows={2}
@@ -85,34 +87,46 @@ export function HizmetlerManager({
                 onChange={(e) =>
                   updateLocal(service.id, { description: e.target.value })
                 }
-                onBlur={() => saveService(service)}
               />
               <label className="flex items-center gap-2 text-xs text-[var(--text-tertiary)]">
                 <input
                   type="checkbox"
                   checked={service.published}
-                  onChange={(e) => {
-                    const next = { ...service, published: e.target.checked };
-                    updateLocal(service.id, { published: e.target.checked });
-                    saveService(next);
-                  }}
+                  onChange={(e) =>
+                    updateLocal(service.id, { published: e.target.checked })
+                  }
                 />
                 Sitede yayınla
               </label>
             </div>
 
-            <button
-              onClick={() => deleteService(service.id)}
-              disabled={busyId === service.id}
-              className="btn btn-ghost !p-2"
-              aria-label="Sil"
-            >
-              {busyId === service.id ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Trash2 className="h-4 w-4" />
-              )}
-            </button>
+            <div className="flex flex-col items-end gap-2">
+              <button
+                onClick={() => deleteService(service.id)}
+                disabled={busyId === service.id}
+                className="btn btn-ghost !p-2"
+                aria-label="Sil"
+              >
+                {busyId === service.id ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Trash2 className="h-4 w-4" />
+                )}
+              </button>
+              <button
+                onClick={() => saveService(service)}
+                disabled={busyId === service.id}
+                className="btn btn-primary text-xs"
+              >
+                {busyId === service.id && (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                )}
+                {savedId === service.id && busyId !== service.id && (
+                  <Check className="h-3.5 w-3.5" />
+                )}
+                Kaydet
+              </button>
+            </div>
           </div>
         </div>
       ))}
