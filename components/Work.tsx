@@ -1,13 +1,14 @@
 import { ArrowUpRight } from "lucide-react";
 import type { WorkItem } from "@prisma/client";
 import { Reveal } from "@/components/Reveal";
+import { SectionLabel } from "@/components/SectionLabel";
 
 export function Work({ items }: { items: WorkItem[] }) {
   return (
     <section id="isler" className="section bg-[var(--surface-alt)]">
       <div className="container-page">
         <Reveal className="max-w-xl">
-          <span className="eyebrow">Seçili İşler</span>
+          <SectionLabel index="04">SEÇİLİ İŞLER</SectionLabel>
           <h2 className="mt-4 text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] font-bold">
             {items.length > 0 ? "Yaptığımız işler" : "Yakında burada"}
           </h2>
@@ -37,7 +38,7 @@ export function Work({ items }: { items: WorkItem[] }) {
                           className="h-full w-full"
                           style={{
                             backgroundImage:
-                              "linear-gradient(135deg, rgba(0,0,238,0.06), rgba(217,143,217,0.18)), repeating-linear-gradient(45deg, rgba(30,30,30,0.04) 0 2px, transparent 2px 14px)",
+                              "linear-gradient(135deg, rgba(234,88,12,0.08), rgba(10,10,10,0.05)), repeating-linear-gradient(45deg, rgba(10,10,10,0.05) 0 2px, transparent 2px 14px)",
                           }}
                         />
                       )}
@@ -73,7 +74,7 @@ export function Work({ items }: { items: WorkItem[] }) {
                   className="card flex aspect-4/3 items-center justify-center"
                   style={{
                     backgroundImage:
-                      "linear-gradient(135deg, rgba(0,0,238,0.05), rgba(217,143,217,0.14)), repeating-linear-gradient(45deg, rgba(30,30,30,0.04) 0 2px, transparent 2px 14px)",
+                      "linear-gradient(135deg, rgba(234,88,12,0.06), rgba(10,10,10,0.04)), repeating-linear-gradient(45deg, rgba(10,10,10,0.05) 0 2px, transparent 2px 14px)",
                   }}
                 >
                   <span className="tag">Yakında</span>

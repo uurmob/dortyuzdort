@@ -27,7 +27,7 @@ export function SiteNav() {
         <div className="logo-wrap relative">
           <a
             href="#top"
-            className="font-[family-name:var(--font-heading)] text-lg font-bold tracking-tight text-[var(--text)]"
+            className="font-[family-name:var(--font-mono)] text-lg font-bold tracking-tight text-[var(--text)]"
           >
             dörtyüzdört
           </a>

@@ -1,5 +1,6 @@
 import { Layers, Zap, Target, MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const POINTS = [
   {
@@ -29,7 +30,7 @@ export function WhyUs() {
     <section id="yaklasim" className="section bg-[var(--surface-alt)]">
       <div className="container-page">
         <Reveal className="max-w-xl">
-          <span className="eyebrow">Yaklaşımımız</span>
+          <SectionLabel index="02">YAKLAŞIMIMIZ</SectionLabel>
           <h2 className="mt-4 text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] font-bold">
             Neden dörtyüzdört?
           </h2>

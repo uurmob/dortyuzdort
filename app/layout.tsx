@@ -17,7 +17,7 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin", "latin-ext"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "700"],
 });
 
 const BASE_URL = "https://www.dortyuzdort.com";

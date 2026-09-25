@@ -2,6 +2,7 @@ import { Code2, Bot, Compass, Layers, Zap, ArrowUpRight } from "lucide-react";
 import type { Service } from "@prisma/client";
 import { Reveal } from "@/components/Reveal";
 import { SpotlightCard } from "@/components/SpotlightCard";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const ICONS = [Code2, Bot, Compass, Layers, Zap];
 
@@ -15,7 +16,7 @@ export function Services({ services }: { services: Service[] }) {
     <section id="hizmetler" className="section">
       <div className="container-page">
         <Reveal className="max-w-xl">
-          <span className="eyebrow">Hizmetler</span>
+          <SectionLabel index="01">HİZMETLER</SectionLabel>
           <h2 className="mt-4 text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] font-bold">
             Tasarımdan otomasyona, uçtan uca.
           </h2>

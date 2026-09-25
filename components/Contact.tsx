@@ -34,7 +34,7 @@ export function Contact({ email }: { email: string }) {
       <div className="container-page">
         <Reveal className="card mx-auto max-w-xl">
           <div className="text-center">
-            <span className="eyebrow justify-center">İletişim</span>
+            <span className="eyebrow justify-center">{"// "}İletişim</span>
             <h2 className="mt-4 text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] font-bold">
               Projenizi konuşalım.
             </h2>

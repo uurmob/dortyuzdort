@@ -1,15 +1,15 @@
 # DESIGN.md
 
-> Ham web'in dürüstlüğüyle konuşan, kocaman ve kendinden emin bir editoryal marka kimliği.
+> Mühendislik konsolu gibi konuşan, mono-tipografiyle örülmüş brütalist bir SaaS kimliği.
 
 ## 1. Visual Theme & Atmosphere
 
-**Style**: Retro-OS Monokrom Editoryal (typesafe.ai referanslı)
-**Keywords**: monokrom, iri tipografi, retro-OS pencereleri, ham/unstyled homage, brütalist gölge, pastel bulut, mono detaylar
-**Tone**: Kendinden emin, teknik ama esprili — NOT karanlık/neon, NOT kurumsal-sıkıcı, NOT aşırı süslü
-**Feel**: Beyaz bir galeri duvarında, eski bir işletim sisteminin pencere çerçeveleriyle sergilenen dev bir başlık.
+**Style**: Brutalist Engineering Console (v0-design-brutalist-ai-saas referanslı)
+**Keywords**: brütalist, mono-her-yerde, nokta-ızgara zemin, turuncu vurgu, terminal/boot-log, // section label, sert offset gölge
+**Tone**: Mühendislik-grade, kendinden emin, ölçülü esprili — NOT pastel/dekoratif, NOT kurumsal-sıkıcı, NOT aşırı süslü
+**Feel**: Kağıt renginde bir zeminde çalışan, siyah çerçeveli bir kontrol paneli; her başlık monospace, her bölüm bir kod yorumu gibi etiketli.
 
-**Interaction Tier**: L2 — Akıcı Etkileşim (scroll reveal, stagger, hover'da sert offset gölge, pastel imleç takibi)
+**Interaction Tier**: L2 — Akıcı Etkileşim (scroll reveal, stagger, hover'da sert offset gölge, terminal boot-log animasyonu, süreç bağlantı çizgisinde akan nokta)
 **Dependencies**: CSS + IntersectionObserver (vanilla) + framer-motion (mevcut). GSAP/Lenis/WebGL yok.
 
 ## 2. Color Palette & Roles
@@ -17,29 +17,29 @@
 ```css
 :root {
   /* Backgrounds */
-  --bg: #fefefe; /* Sayfa zemini — neredeyse beyaz */
+  --bg: #f1efe9; /* Sayfa zemini — sıcak "mühendislik kağıdı" krem */
   --surface: #ffffff; /* Kart/panel zemini */
-  --surface-alt: #f3f2ef; /* Alternatif section zemini (hafif sıcak gri) */
-  --surface-hover: #ececea; /* Hover durumunda yüzey / form alanları */
+  --surface-alt: #e8e5dc; /* Alternatif section zemini */
+  --surface-hover: #e2ded2; /* Hover durumunda yüzey / form alanları */
 
   /* Borders */
-  --border: #e3e2de; /* Sessiz iç ayraçlar */
-  --border-hover: #1e1e1e;
-  --border-strong: #1e1e1e; /* Kart/buton/pencere çerçeveleri — hep siyah */
+  --border: #d8d4c8; /* Sessiz iç ayraçlar, nokta-ızgara rengi */
+  --border-hover: #0a0a0a;
+  --border-strong: #0a0a0a; /* Kart/buton/pencere çerçeveleri — hep siyah */
 
   /* Text */
-  --text: #1e1e1e; /* Başlıklar, önemli metin */
+  --text: #0a0a0a; /* Başlıklar, önemli metin */
   --text-secondary: #55534d; /* Gövde metni */
-  --text-tertiary: #918f88; /* Etiketler, ASCII ayraçlar */
+  --text-tertiary: #918f88; /* Etiketler, section-label dolgusu */
 
-  /* Accent — klasik "ham web" hyperlink mavisi, bir göz kırpma */
-  --accent: #0000ee;
-  --accent-hover: #3333ff;
-  --accent-2: #d98fd9; /* Pastel bulut/blob için destekleyici */
+  /* Accent — compute-cluster turuncusu */
+  --accent: #ea580c;
+  --accent-hover: #f97316;
+  --accent-2: #9a3412; /* Nadir kullanılan koyu turuncu destek */
 
-  --bg-rgb: 254, 254, 254;
-  --accent-rgb: 0, 0, 238;
-  --accent-2-rgb: 217, 143, 217;
+  --bg-rgb: 241, 239, 233;
+  --accent-rgb: 234, 88, 12;
+  --accent-2-rgb: 154, 52, 18;
 
   --success: #1a7f37;
   --error: #cf222e;
@@ -49,8 +49,9 @@
 
 **Color Rules:**
 - Tüm renkler CSS custom property üzerinden kullanılır; component içine hardcoded hex gömülmez.
-- Vurgu her yerde tek renk: `--accent` (mavi). `--accent-2` yalnızca Hero'daki pastel bulut gradyanında kullanılır, metinde asla.
-- Kart/buton/pencere çerçeveleri hep `--border-strong` (siyah, 1.5px) — bu, "flat/brütalist" hissin temeli.
+- Vurgu her yerde tek renk: `--accent` (turuncu) — hover gölgeleri, section-label index'i, terminal imleci, süreç bağlantı noktası hep bu renk.
+- Kart/buton/pencere çerçeveleri hep `--border-strong` (siyah, 1.5px) — "flat/brütalist" hissin temeli.
+- Body zemininde her zaman 24px aralıklı nokta-ızgara (`radial-gradient(circle, var(--border) 1px, transparent 1px)`).
 
 ## 3. Typography Rules
 
@@ -59,24 +60,27 @@
 - Body: Inter (`next/font/google`, weights 400/500/600)
 - Mono (pencere başlıkları, etiketler, ASCII ayraçlar): JetBrains Mono (`next/font/google`, weight 400/500)
 
+**Not**: `h1, h2, h3` global kuralı artık **JetBrains Mono, weight 700** kullanıyor (Space Grotesk değişkeni hâlâ yüklü ama kullanılmıyor — istenirse geri alınabilir). Bütün başlıklar mono, "mühendislik konsolu" hissi buradan geliyor.
+
 | Role | Font | Size | Weight | Line Height | Letter Spacing |
 |------|------|------|--------|-------------|----------------|
-| Hero H1 | Space Grotesk | clamp(2.75rem, 7vw, 6.5rem) | 500 | 1.02 | -0.02em |
-| Section H2 | Space Grotesk | clamp(2rem, 4vw, 2.75rem) | 700 | 1.15 | -0.01em |
-| H3 | Space Grotesk | 1.25rem | 600 | 1.3 | — |
+| Hero H1 | JetBrains Mono | clamp(2.25rem, 6.5vw, 5.5rem) | 700 | 1.05 | -0.02em |
+| Section H2 | JetBrains Mono | clamp(2rem, 4vw, 2.75rem) | 700 | 1.15 | -0.02em |
+| H3 | JetBrains Mono | 1.25rem | 700 | 1.3 | -0.02em |
 | Body | Inter | 1.0625rem | 400 | 1.7 | 0 |
+| Section Label (`// X — 0N`) | JetBrains Mono | 0.75rem | 500 | 1.4 | 0.06em (uppercase) |
 | Label / Eyebrow | JetBrains Mono | 0.8125rem | 500 | 1.4 | 0.06em (uppercase) |
-| Mono / Detail | JetBrains Mono | 0.6875–0.875rem | 400/500 | 1.4–1.5 | 0–0.04em |
+| Mono / Detail | JetBrains Mono | 0.6875–0.875rem | 400/500/700 | 1.4–1.6 | 0–0.04em |
 
 **Typography Rules:**
-- Hero H1 kasıtlı olarak **medium (500)** ağırlıkta — kalın değil, iri punto zaten yeterli görsel ağırlığı veriyor.
+- Başlıklar mono + weight 700 — mono geniş olduğundan Hero H1 boyutu bilinçli olarak küçültüldü (bkz. tablo), taşmayı önlemek için.
 - Türkçe karakterler tüm seçilen fontlarda native destekleniyor.
 - **NEVER use**: sistem serif fontları, el yazısı fontlar, gövde metninde italik.
 
 **Text Decoration:**
-- Hero H1'in vurgulu kısmı (`.gradient-text`): düz `--accent` (mavi) rengi — gradient/glow yok, referanstaki ham hyperlink homage'ının devamı.
+- Hero H1'in vurgulu kısmı (`.gradient-text`): düz `--accent` (turuncu) rengi — gradient/glow yok.
 - Section H2: düz `--text`, dekorasyon yok.
-- Eyebrow: mono font + `--accent` renginde küçük bir kare işaret (●/■ değil, 6px kare nokta).
+- Section Label: `// BAŞLIK` solda, noktalı dolgu çizgisi ortada, turuncu index numarası (`01`, `02`...) sağda — bkz. `components/SectionLabel.tsx`.
 - Gövde paragrafında (`p`) hiçbir dekorasyon yok.
 
 ## 4. Component Stylings

@@ -20,7 +20,7 @@ export function AdminNav({ userName }: { userName: string }) {
     <header className="border-b border-[var(--border)]">
       <div className="container-page flex h-16 items-center justify-between">
         <div className="flex items-center gap-8">
-          <span className="font-[family-name:var(--font-heading)] font-bold">
+          <span className="font-[family-name:var(--font-mono)] font-bold">
             dörtyüzdört <span className="text-[var(--text-tertiary)] font-normal">/ yönet</span>
           </span>
           <nav className="hidden items-center gap-6 sm:flex">

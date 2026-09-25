@@ -39,7 +39,6 @@ export function Hero({
       onPointerMove={handlePointerMove}
       className="relative overflow-hidden pt-40 pb-24 lg:pt-52 lg:pb-32"
     >
-      <div className="hero-cloud" aria-hidden />
       <div ref={spotlightRef} className="hero-spotlight" aria-hidden />
 
       <div className="container-page relative">
@@ -48,7 +47,7 @@ export function Hero({
 
           <span className="eyebrow justify-center">{eyebrow}</span>
 
-          <h1 className="mt-6 text-[clamp(2.75rem,7vw,6.5rem)] leading-[1.02] font-medium">
+          <h1 className="mt-6 text-[clamp(2.25rem,6.5vw,5.5rem)] leading-[1.05]">
             <span className="gradient-text">{titleMain}</span>
             <br />
             {titleSecondary}
