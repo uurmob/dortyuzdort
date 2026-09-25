@@ -38,21 +38,25 @@ export function Hero({
       onPointerMove={handlePointerMove}
       className="relative overflow-hidden pt-40 pb-24 lg:pt-52 lg:pb-32"
     >
-      <div
-        className="orb -left-32 -top-20 h-80 w-80 bg-[var(--accent)] blur-[90px]"
-        aria-hidden
-      />
-      <div
-        className="orb -right-24 top-40 h-96 w-96 bg-[var(--accent-2)] blur-[100px]"
-        aria-hidden
-      />
+      <div className="hero-cloud" aria-hidden />
       <div ref={spotlightRef} className="hero-spotlight" aria-hidden />
 
       <div className="container-page relative">
         <div className="mx-auto max-w-3xl text-center">
+          <div className="window mx-auto mb-8 max-w-xs text-left">
+            <div className="window-titlebar">
+              <span>dortyuzdort_os.exe</span>
+              <span>— 404</span>
+            </div>
+            <div className="window-body">
+              <span className="text-[var(--text)]">Durum:</span> kaybolan
+              markalar bulunuyor...
+            </div>
+          </div>
+
           <span className="eyebrow justify-center">{eyebrow}</span>
 
-          <h1 className="mt-6 text-[clamp(2.75rem,6vw,5rem)] leading-[1.05] font-bold">
+          <h1 className="mt-6 text-[clamp(2.75rem,7vw,6.5rem)] leading-[1.02] font-medium">
             <span className="gradient-text">{titleMain}</span>
             <br />
             {titleSecondary}

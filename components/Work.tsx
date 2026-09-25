@@ -37,7 +37,7 @@ export function Work({ items }: { items: WorkItem[] }) {
                           className="h-full w-full"
                           style={{
                             backgroundImage:
-                              "linear-gradient(135deg, rgba(0,212,255,0.1), rgba(139,92,246,0.1)), repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 14px)",
+                              "linear-gradient(135deg, rgba(0,0,238,0.06), rgba(217,143,217,0.18)), repeating-linear-gradient(45deg, rgba(30,30,30,0.04) 0 2px, transparent 2px 14px)",
                           }}
                         />
                       )}
@@ -73,7 +73,7 @@ export function Work({ items }: { items: WorkItem[] }) {
                   className="card flex aspect-4/3 items-center justify-center"
                   style={{
                     backgroundImage:
-                      "linear-gradient(135deg, rgba(0,212,255,0.08), rgba(139,92,246,0.08)), repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 14px)",
+                      "linear-gradient(135deg, rgba(0,0,238,0.05), rgba(217,143,217,0.14)), repeating-linear-gradient(45deg, rgba(30,30,30,0.04) 0 2px, transparent 2px 14px)",
                   }}
                 >
                   <span className="tag">Yakında</span>

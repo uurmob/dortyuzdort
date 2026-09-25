@@ -9,6 +9,7 @@ import { Process } from "@/components/Process";
 import { Work } from "@/components/Work";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { AsciiDivider } from "@/components/AsciiDivider";
 
 // Bu sayfa her istekte Prisma/SQLite'a bağlanır (admin panelinden yapılan
 // değişikliklerin anında yansıması için); build container'da DB erişimi
@@ -41,8 +42,10 @@ export default async function Home() {
         />
         <ServiceMarquee />
         <Services services={services} />
+        <AsciiDivider />
         <WhyUs />
         <Process />
+        <AsciiDivider />
         <Work items={workItems} />
         <Contact email={getSetting(settings, "contact_email")} />
       </main>

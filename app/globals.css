@@ -20,32 +20,33 @@
 
 :root {
   /* Backgrounds */
-  --bg: #0b0b0f;
-  --surface: #131318;
-  --surface-alt: #0f0f14;
-  --surface-hover: #1b1b22;
+  --bg: #fefefe;
+  --surface: #ffffff;
+  --surface-alt: #f3f2ef;
+  --surface-hover: #ececea;
 
   /* Borders */
-  --border: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.18);
+  --border: #e3e2de;
+  --border-hover: #1e1e1e;
+  --border-strong: #1e1e1e;
 
   /* Text */
-  --text: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --text-tertiary: #6b7280;
+  --text: #1e1e1e;
+  --text-secondary: #55534d;
+  --text-tertiary: #918f88;
 
-  /* Accent */
-  --accent: #00d4ff;
-  --accent-hover: #33deff;
-  --accent-2: #8b5cf6;
+  /* Accent (classic hyperlink blue — an homage to raw, unstyled web) */
+  --accent: #0000ee;
+  --accent-hover: #3333ff;
+  --accent-2: #d98fd9;
 
-  --bg-rgb: 11, 11, 15;
-  --accent-rgb: 0, 212, 255;
-  --accent-2-rgb: 139, 92, 246;
+  --bg-rgb: 254, 254, 254;
+  --accent-rgb: 0, 0, 238;
+  --accent-2-rgb: 217, 143, 217;
 
-  --success: #22c55e;
-  --error: #ef4444;
-  --warning: #f59e0b;
+  --success: #1a7f37;
+  --error: #cf222e;
+  --warning: #9a6700;
 }
 
 * {
@@ -113,29 +114,23 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--font-body);
+  font-family: var(--font-mono), monospace;
   font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--text-secondary);
 }
 
 .eyebrow::before {
   content: "";
   width: 6px;
   height: 6px;
-  border-radius: 999px;
   background: var(--accent);
-  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.8);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--text), var(--accent) 60%, var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 40px rgba(var(--accent-rgb), 0.35);
+  color: var(--accent);
 }
 
 /* ---------- Buttons ---------- */
@@ -146,31 +141,30 @@ p {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.875rem 1.75rem;
-  border-radius: 999px;
+  border-radius: 4px;
   font-family: var(--font-body), system-ui, sans-serif;
   font-weight: 600;
   font-size: 0.9375rem;
   min-height: 44px;
+  border: 1.5px solid var(--border-strong);
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease,
-    background 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
+    background 0.15s ease,
+    color 0.15s ease;
   cursor: pointer;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #05070a;
-  border: 1px solid transparent;
+  background: var(--text);
+  color: var(--bg);
 }
 .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.35);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--border-strong);
 }
 .btn-primary:active {
-  transform: translateY(0) scale(0.97);
+  transform: translate(0, 0);
   box-shadow: none;
 }
 .btn-primary:focus-visible {
@@ -179,13 +173,16 @@ p {
 }
 
 .btn-ghost {
-  background: transparent;
+  background: var(--surface);
   color: var(--text);
-  border: 1px solid var(--border);
 }
 .btn-ghost:hover {
-  border-color: var(--border-hover);
-  background: var(--surface-hover);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--border-strong);
+}
+.btn-ghost:active {
+  transform: translate(0, 0);
+  box-shadow: none;
 }
 .btn-ghost:focus-visible {
   outline: 2px solid var(--accent);
@@ -196,39 +193,21 @@ p {
 
 .card {
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
   padding: 2rem;
   position: relative;
   overflow: hidden;
   transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
-}
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    280px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(var(--accent-rgb), 0.12),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 .card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-}
-.card:hover::before {
-  opacity: 1;
+  transform: translate(-3px, -3px);
+  box-shadow: 5px 5px 0 var(--border-strong);
 }
 .card:focus-within {
-  border-color: var(--accent);
+  box-shadow: 5px 5px 0 var(--border-strong);
 }
 
 /* ---------- Nav ---------- */
@@ -239,15 +218,12 @@ p {
   left: 0;
   right: 0;
   z-index: 100;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--bg);
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 0.2s ease;
 }
 .nav.scrolled {
-  background: rgba(var(--bg-rgb), 0.72);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom-color: var(--border);
+  border-bottom-color: var(--border-strong);
 }
 
 /* ---------- Links ---------- */
@@ -270,7 +246,7 @@ p {
 }
 .link:hover,
 .link:focus-visible {
-  color: var(--text);
+  color: var(--accent);
 }
 .link:hover::after,
 .link:focus-visible::after {
@@ -289,19 +265,16 @@ p {
   gap: 0.375rem;
   padding: 0.375rem 0.875rem;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
+  border: 1.5px solid var(--border-strong);
+  color: var(--text);
   font-family: var(--font-mono), monospace;
   font-size: 0.75rem;
   letter-spacing: 0.02em;
   background: var(--surface);
-  transition:
-    border-color 0.2s ease,
-    color 0.2s ease;
+  transition: background 0.2s ease;
 }
 .tag:hover {
-  border-color: var(--border-hover);
-  color: var(--text);
+  background: var(--surface-hover);
 }
 
 /* ---------- Grid ---------- */
@@ -380,7 +353,7 @@ p {
 .marquee {
   display: flex;
   overflow: hidden;
-  border-block: 1px solid var(--border);
+  border-block: 1.5px solid var(--border-strong);
   background: var(--surface-alt);
 }
 .marquee-track {
@@ -409,30 +382,80 @@ p {
   font-family: var(--font-mono), monospace;
   font-size: 0.875rem;
   letter-spacing: 0.04em;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
 }
 .marquee-item span.dot {
   color: var(--accent);
 }
 
-/* ---------- Hero spotlight & orbs ---------- */
+/* ---------- Hero cloud & spotlight ---------- */
+
+.hero-cloud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 40% at 25% 20%, rgba(217, 143, 217, 0.35), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 75% 10%, rgba(255, 200, 220, 0.4), transparent 70%),
+    radial-gradient(ellipse 45% 30% at 50% 35%, rgba(180, 160, 240, 0.25), transparent 70%);
+  filter: blur(40px);
+}
 
 .hero-spotlight {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    600px circle at var(--mx, 50%) var(--my, 20%),
-    rgba(var(--accent-rgb), 0.12),
+    500px circle at var(--mx, 50%) var(--my, 20%),
+    rgba(var(--accent-2-rgb), 0.18),
     transparent 60%
   );
   pointer-events: none;
 }
 
 .orb {
-  position: absolute;
-  border-radius: 999px;
-  opacity: 0.35;
-  pointer-events: none;
+  display: none;
+}
+
+/* ---------- Retro window chrome ---------- */
+
+.window {
+  background: var(--surface);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.window-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 0.75rem;
+}
+.window-body {
+  padding: 1.25rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+/* ---------- ASCII divider ---------- */
+
+.ascii-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding-block: 1.5rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  user-select: none;
 }
 
 /* ---------- Logo easter egg ---------- */
@@ -443,10 +466,10 @@ p {
   left: 0;
   margin-top: 0.5rem;
   padding: 0.375rem 0.75rem;
-  border-radius: 8px;
-  border: 1px solid var(--border);
+  border-radius: 2px;
+  border: 1.5px solid var(--border-strong);
   background: var(--surface);
-  color: var(--text-tertiary);
+  color: var(--text);
   font-family: var(--font-mono), monospace;
   font-size: 0.6875rem;
   white-space: nowrap;
