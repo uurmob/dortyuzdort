@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { RetroWindow } from "@/components/RetroWindow";
 
 export function Hero({
   eyebrow,
@@ -43,16 +44,7 @@ export function Hero({
 
       <div className="container-page relative">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="window mx-auto mb-8 max-w-xs text-left">
-            <div className="window-titlebar">
-              <span>dortyuzdort_os.exe</span>
-              <span>— 404</span>
-            </div>
-            <div className="window-body">
-              <span className="text-[var(--text)]">Durum:</span> kaybolan
-              markalar bulunuyor...
-            </div>
-          </div>
+          <RetroWindow />
 
           <span className="eyebrow justify-center">{eyebrow}</span>
 
