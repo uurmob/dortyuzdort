@@ -28,7 +28,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .field{display:flex;flex-direction:column;gap:8px;font-size:15px;font-weight:600}
 .field input,.field select,.field textarea{font:inherit;font-weight:400;padding:13px 14px;border:1px solid #B9BACB;border-radius:4px;background:#fff;color:var(--ink)}
 .full{grid-column:1/-1}
+section[id]{scroll-margin-top:12px}
+.ph{display:flex;align-items:center;justify-content:center;height:240px;border-radius:6px;background:repeating-linear-gradient(135deg,#E6E7F0 0 14px,#DCDDE9 14px 28px);color:var(--muted);font-size:15px;font-weight:600}
 @media (max-width:720px){
+  #hakkimizda dl{grid-template-columns:1fr !important}
   .h1{font-size:50px}.h2{font-size:40px}
   .steps{grid-template-columns:1fr !important}
   .form{grid-template-columns:1fr !important;padding:22px !important}
@@ -51,14 +54,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 <header style="background:#fff;border-bottom:1px solid var(--line)">
   <div class="wrap" style="padding-top:16px;padding-bottom:16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
-    <a href="#" style="text-decoration:none;display:flex;align-items:baseline;gap:10px;color:var(--navy)">
+    <a href="#anasayfa" style="text-decoration:none;display:flex;align-items:baseline;gap:10px;color:var(--navy)">
       <span style="font-weight:800;font-stretch:75%;font-size:32px;letter-spacing:.5px;line-height:1">ESTE</span>
       <span style="font-weight:500;font-size:15px;color:var(--muted)">Yalıtım &amp; Restorasyon</span>
     </a>
     <nav aria-label="Ana menü" style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 26px;font-size:16px;font-weight:500">
+      <a href="#anasayfa" style="text-decoration:none;color:var(--ink);padding:12px 0">Anasayfa</a>
+      <a href="#hakkimizda" style="text-decoration:none;color:var(--ink);padding:12px 0">Hakkımızda</a>
       <a href="#alanlar" style="text-decoration:none;color:var(--ink);padding:12px 0">Uygulama alanları</a>
+      <a href="#projeler" style="text-decoration:none;color:var(--ink);padding:12px 0">Projeler</a>
       <a href="#restorasyon" style="text-decoration:none;color:var(--ink);padding:12px 0">Restorasyon</a>
-      <a href="#markalar" style="text-decoration:none;color:var(--ink);padding:12px 0">Markalar</a>
       <a href="#showroom" style="text-decoration:none;color:var(--ink);padding:12px 0">Showroom</a>
       <a href="#iletisim" class="btn" style="font-size:16px;padding:13px 22px">Keşif iste</a>
     </nav>
@@ -66,7 +71,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 </header>
 
 <main>
-<section style="background:var(--indigo);color:#fff">
+<section id="anasayfa" style="background:var(--indigo);color:#fff">
   <div class="wrap" style="padding-top:72px;display:flex;flex-wrap:wrap;gap:48px;align-items:stretch">
     <div style="flex:1 1 460px;display:flex;flex-direction:column;gap:26px;padding-bottom:64px;min-width:0">
       <div style="display:inline-flex;align-self:flex-start;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.35);border-radius:40px;padding:8px 16px;font-size:14px;font-weight:600">
@@ -102,6 +107,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   </div>
 </section>
 
+<section id="hakkimizda" class="wrap" style="padding-top:96px;padding-bottom:40px">
+  <div style="display:flex;flex-wrap:wrap;gap:40px 72px">
+    <h2 class="display h2" style="flex:1 1 340px">Malzemeyi satmakla kalmıyor, doğru uygulanmasını da takip ediyoruz.</h2>
+    <div style="flex:1 1 460px;display:flex;flex-direction:column;gap:20px;min-width:0">
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#3E3D57">Este Yalıtım, [KURULUŞ YILI] yılından bu yana İstanbul Anadolu Yakası'nda su yalıtımı ve restorasyon malzemeleri tedarik ediyor. Ustalara, müteahhitlere ve evini onaran ev sahiplerine aynı titizlikle hizmet veriyoruz.</p>
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#3E3D57">Bostik smart bayisi olarak yalıtımın yanında yapıştırıcı, derz ve sızdırmazlık ürünlerini de tek noktadan sağlıyoruz. Hangi ürünün hangi yüzeye uygun olduğunu showroom'da örneklerle anlatıyoruz.</p>
+      <dl style="margin:8px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;border-top:1px solid #D5D6E3;padding-top:20px">
+        <div><dt style="font-size:14px;color:var(--muted)">Kuruluş</dt><dd style="margin:4px 0 0;font-weight:700;font-size:20px;color:var(--navy)">[YIL]</dd></div>
+        <div><dt style="font-size:14px;color:var(--muted)">Tamamlanan proje</dt><dd style="margin:4px 0 0;font-weight:700;font-size:20px;color:var(--navy)">[SAYI]</dd></div>
+        <div><dt style="font-size:14px;color:var(--muted)">Hizmet bölgesi</dt><dd style="margin:4px 0 0;font-weight:700;font-size:20px;color:var(--navy)">[BÖLGE]</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
 <section id="alanlar" class="wrap" style="padding-top:96px;padding-bottom:40px">
   <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:40px">
     <h2 class="display h2" style="max-width:640px">Su nereden giriyorsa, çözümü oradan başlar.</h2>
@@ -133,6 +153,30 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <p style="margin:0;flex:2 1 380px;font-size:17px;line-height:1.55;color:#3E3D57">MS silikonlar, poliüretan köpükler ve bantlarla pencere çevresi ve derz sızdırmazlığı.</p>
       <span style="flex:1 1 220px;font-size:15px;font-weight:600;color:var(--indigo)">Tytan · Quilosa · Adroit</span>
     </div>
+  </div>
+</section>
+
+<section id="projeler" class="wrap" style="padding-top:56px;padding-bottom:40px">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:36px">
+    <h2 class="display h2">Projeler</h2>
+    <p style="margin:0;font-size:17px;line-height:1.55;color:var(--muted);max-width:420px">Ürünlerimizin kullanıldığı ve keşfini yaptığımız uygulamalardan örnekler.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+    <article style="display:flex;flex-direction:column;gap:12px">
+      <div class="ph">[PROJE FOTOĞRAFI]</div>
+      <h3 style="margin:0;font-size:21px;font-weight:700;color:var(--navy)">Teras su yalıtımı</h3>
+      <p style="margin:0;font-size:15px;color:var(--muted)">[İLÇE] · Konut</p>
+    </article>
+    <article style="display:flex;flex-direction:column;gap:12px">
+      <div class="ph">[PROJE FOTOĞRAFI]</div>
+      <h3 style="margin:0;font-size:21px;font-weight:700;color:var(--navy)">Banyo ıslak hacim yenileme</h3>
+      <p style="margin:0;font-size:15px;color:var(--muted)">[İLÇE] · Daire</p>
+    </article>
+    <article style="display:flex;flex-direction:column;gap:12px">
+      <div class="ph">[PROJE FOTOĞRAFI]</div>
+      <h3 style="margin:0;font-size:21px;font-weight:700;color:var(--navy)">Bodrum nem restorasyonu</h3>
+      <p style="margin:0;font-size:15px;color:var(--muted)">[İLÇE] · Tarihi yapı</p>
+    </article>
   </div>
 </section>
 
