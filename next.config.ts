@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Müşteri önizleme sayfaları: public/<firma>/index.html → /<firma>
+  async rewrites() {
+    return [{ source: "/este", destination: "/este/index.html" }];
+  },
   async headers() {
     return [
       {
